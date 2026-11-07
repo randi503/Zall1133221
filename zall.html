@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>ZALL RENAME</title>
+<style>
+:root{--tx:#f4f6fb;--mu:rgba(244,246,251,.68);--gl:rgba(255,255,255,.12);--gb:rgba(255,255,255,.26)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,.drop,label,h1,h2,.sub,footer{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+button:focus,button:focus-visible,.drop:focus,input:focus,input:focus-visible,select:focus{outline:0}
+::selection{background:rgba(255,255,255,.28);color:#fff}
+html{background:#1b1f3a}
+body{margin:0;color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:28px 14px 20px;min-height:100vh}
+
+.bg{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:-1;background:url("https://ar-hosting.pages.dev/f/OMYTK2TRKM3GCZTBM53VUYTYLHCZWK3CGNKV7OCN7LZLMHISYQ") center center/cover no-repeat,linear-gradient(135deg,#232850,#3a2a5c,#1f4a6b)}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,24,.18),rgba(10,12,24,.45))}
+
+.wrap{max-width:780px;margin:0 auto}
+h1{margin:4px 0 4px;text-align:center;font-size:clamp(30px,8vw,46px);font-weight:800;letter-spacing:5px;color:#fff;text-shadow:0 2px 18px rgba(160,180,255,.45);animation:fade .8s both}
+.sub{text-align:center;color:var(--mu);font-size:13px;letter-spacing:1.5px;margin:0 0 22px;animation:fade .8s .15s both}
+
+.card{background:var(--gl);border:1px solid var(--gb);border-radius:20px;padding:18px;margin-bottom:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.2);animation:up .5s ease both;animation-delay:calc(var(--d,0)*.08s + .1s)}
+.card h2{font-size:12px;font-weight:600;margin:0 0 12px;color:var(--mu);text-transform:uppercase;letter-spacing:1px}
+
+.drop{border:1.5px dashed rgba(255,255,255,.35);border-radius:14px;padding:26px 16px;text-align:center;color:var(--mu);cursor:pointer;background:rgba(255,255,255,.06);transition:background .2s,border-color .2s,color .2s}
+.drop:hover,.drop.on{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6);color:#fff}
+.ico{width:46px;height:46px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);animation:float 4s ease-in-out infinite}
+.ico svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.row{display:flex;gap:8px;margin-bottom:8px;animation:fade .3s both}
+.row.out{animation:fadeout .2s forwards}
+input[type=text]{flex:1;min-width:0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--tx);border-radius:12px;padding:10px 12px;outline:0;font:inherit;transition:border-color .2s,background .2s}
+input[type=text]::placeholder{color:rgba(244,246,251,.5)}
+input[type=text]:focus{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.16)}
+
+button{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.32);border-radius:12px;padding:9px 15px;cursor:pointer;font:inherit;font-weight:600;transition:background .2s,transform .15s}
+button:hover{background:rgba(255,255,255,.3);transform:translateY(-1px)}
+button.g{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
+button.g:hover{background:rgba(255,255,255,.2)}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+button.load{pointer-events:none;opacity:.7}
+
+label{display:flex;align-items:center;gap:8px;color:var(--mu);margin:8px 0;cursor:pointer}
+input[type=checkbox]{accent-color:#dfe6ff;width:16px;height:16px}
+.mu{color:var(--mu);font-size:13px}
+
+pre{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px;max-height:300px;overflow:auto;white-space:pre-wrap;margin:0;font-size:13px;color:#eef1ff}
+.bar{height:6px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;margin:12px 0;opacity:0;transition:opacity .3s}
+.bar.on{opacity:1}
+.bar span{display:block;height:100%;width:0;border-radius:99px;background:rgba(255,255,255,.7);transition:width .25s}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;max-height:280px;overflow:auto;margin-bottom:12px;padding:2px}
+.chip{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);font-weight:500;max-width:100%;animation:fade .35s both}
+.chip i{font-style:normal;font-size:11px;opacity:.8;background:rgba(255,255,255,.18);padding:1px 7px;border-radius:999px}
+.chip b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.chip em{font-style:normal;opacity:.6;font-size:12px}
+.chip.used{opacity:.4}
+
+.info a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;margin-bottom:8px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;transition:background .2s,transform .15s}
+.info a:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+.info a:last-child{margin-bottom:0}
+.info a small{display:block;color:var(--mu);font-size:12px}
+footer{margin-top:8px;text-align:center;font-size:10px;letter-spacing:.6px;color:rgba(244,246,251,.55)}
+footer a{color:inherit;text-decoration:none}
+footer a:hover{color:#fff}
+[hidden]{display:none!important}
+
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes float{50%{transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="wrap">
+<h1>ZALL RENAME</h1>
+<p class="sub">zip / file find &amp; replace · auto detect</p>
+
+<div class="card" style="--d:0">
+<h2>file zip</h2>
+<div class="drop" id="drop">
+<div class="ico"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
+klik / drop file .zip atau file lain di sini
+</div>
+<input type="file" id="file" multiple hidden>
+<div class="mu" id="fname" style="margin-top:10px"></div>
+</div>
+
+<div class="card" id="detcard" hidden>
+<h2>hasil auto detect</h2>
+<div class="chips" id="det"></div>
+<div class="row" style="margin:0">
+<button class="g" id="addall">tambah semua</button>
+<button class="g" id="rescan">scan ulang</button>
+</div>
+<div class="mu" style="margin-top:8px">tap kandidat buat masukin ke daftar ganti</div>
+</div>
+
+<div class="card" style="--d:1">
+<h2>cari &amp; ganti</h2>
+<div id="pairs"></div>
+<button class="g" id="add">+ tambah pasangan</button>
+<label><input type="checkbox" id="cs" checked> case sensitive</label>
+<label><input type="checkbox" id="rx"> pakai regex</label>
+<label><input type="checkbox" id="rp" checked> rename nama file / folder juga</label>
+<div class="row" style="margin-top:10px">
+<input type="text" id="ext" value="js,mjs,cjs,jsx,ts,tsx,vue,json,html,htm,css,scss,txt,md,xml,svg,php,py,yml,yaml,env,sql,ini">
+</div>
+<div class="mu">ekstensi yang diproses isinya (file lain dicopy apa adanya)</div>
+</div>
+
+<div class="card" style="--d:2">
+<h2>proses</h2>
+<button id="run" disabled>proses &amp; download</button>
+<div class="bar" id="bar"><span id="fill"></span></div>
+<pre id="log">belum ada proses.</pre>
+</div>
+
+<div class="card info" id="info" style="--d:0" hidden>
+<a href="https://whatsapp.com/channel/0029VbB7uU0BPzjXvSiQ8H2Z" target="_blank" rel="noopener noreferrer"><span>follow channel resmi<small>WhatsApp Channel</small></span><span>›</span></a>
+<a href="https://tokogenz.my.id" target="_blank" rel="noopener noreferrer"><span>website buy app premium resmi by FanzID Official<small>tokogenz.my.id</small></span><span>›</span></a>
+</div>
+
+<footer><a href="#" id="credit">web by FanzID Official</a></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+let inputs=[];
+let detected=[];
+
+function addPair(a="",b=""){
+const d=document.createElement("div");
+d.className="row";
+d.innerHTML='<input type="text" class="f" placeholder="cari (nama lama)"><input type="text" class="r" placeholder="ganti jadi (nama baru)"><button class="g x">×</button>';
+d.querySelector(".f").value=a;
+d.querySelector(".r").value=b;
+d.querySelector(".x").onclick=()=>{d.classList.add("out");setTimeout(()=>d.remove(),200)};
+$("pairs").appendChild(d);
+return d;
+}
+addPair();
+$("add").onclick=()=>addPair();
+
+function pickPair(v){
+const rows=[...document.querySelectorAll("#pairs .row")];
+if(rows.some(r=>r.querySelector(".f").value===v))return;
+const empty=rows.find(r=>!r.querySelector(".f").value);
+const row=empty||addPair();
+row.querySelector(".f").value=v;
+row.querySelector(".r").focus();
+}
+
+function extList(){
+return $("ext").value.split(",").map(s=>s.trim().toLowerCase()).filter(Boolean);
+}
+
+const JUNK=/^(true|false|null|undefined|name|title|div|span|button|text|string|number|object|submit|example|test|admin|user|default|value|author|owner|company|brand)$/i;
+const SKIPDOM=/(w3\.org|googleapis|gstatic|cdnjs|jsdelivr|unpkg|github|githubusercontent|npmjs|schema\.org|mozilla|example\.com|localhost|fontawesome|bootstrapcdn|cloudflare|google|facebook\.com|twitter\.com|youtube|reactjs|nodejs|apache\.org|opensource|xmlns|jquery|ar-hosting)/i;
+
+async function detect(entries){
+const exts=extList();
+const map=new Map();
+const add=(kind,val,n)=>{
+val=String(val||"").replace(/\s+/g," ").replace(/[.,;:\-–|*]+$/,"").trim();
+if(val.length<2||val.length>60||/^\d+$/.test(val)||/\$\{/.test(val)||JUNK.test(val))return;
+const o=map.get(val);
+if(o){o.n+=n||1;if(!o.kinds.includes(kind))o.kinds.push(kind)}
+else map.set(val,{val,n:n||1,kinds:[kind]});
+};
+const names=entries.map(x=>x.name);
+const roots=new Set(names.map(n=>n.split("/")[0]).filter(n=>n&&names.some(m=>m.startsWith(n+"/"))));
+roots.forEach(r=>add("folder",r,1));
+for(const e of entries){
+const name=e.name;
+if(e.dir)continue;
+const ext=name.split(".").pop().toLowerCase();
+if(!exts.includes(ext))continue;
+let t=await e.text();
+if(t.length>2000000)t=t.slice(0,2000000);
+const base=name.split("/").pop().toLowerCase();
+if(base==="package.json"){
+try{
+const j=JSON.parse(t);
+if(j.name)add("package",j.name,1);
+if(j.author)add("author",typeof j.author==="string"?j.author.replace(/<.*?>|\(.*?\)/g,""):j.author.name,1);
+if(j.homepage)add("domain",String(j.homepage).replace(/^https?:\/\//,"").split("/")[0],1);
+}catch(_){}
+}
+let m;
+const reTitle=/<title[^>]*>([^<]{2,80})<\/title>/gi;
+while((m=reTitle.exec(t)))add("judul",m[1],1);
+const reMeta=/<meta[^>]+(?:name|property)=["'](?:author|application-name|apple-mobile-web-app-title|og:site_name|og:title)["'][^>]*content=["']([^"']{2,80})["']/gi;
+while((m=reMeta.exec(t)))add("meta",m[1],1);
+const reKey=/(?:appName|app_name|siteName|site_name|brandName|brand|storeName|shopName|companyName|company|author|owner|developer|creator|projectName|webName)["']?\s*[:=]\s*["'`]([^"'`\n]{2,40})["'`]/gi;
+while((m=reKey.exec(t)))add("nama",m[1],1);
+const reAuth=/@author\s+([^\n*<]{2,40})/g;
+while((m=reAuth.exec(t)))add("author",m[1],1);
+const reBy=/(?:created|made|built|developed|crafted|designed)\s+by\s+([A-Z][\w .-]{1,40})/g;
+while((m=reBy.exec(t)))add("author",m[1],1);
+const reCopy=/(?:©|&copy;|\(c\)|copyright)\s*(?:\d{4}(?:\s*[-–]\s*\d{4})?)?\s*,?\s*([^\n<*"'\\]{2,40})/gi;
+while((m=reCopy.exec(t))){
+add("copyright",m[1].replace(/all rights reserved.*/i,""),1);
+}
+const reDom=/https?:\/\/((?:[a-z0-9-]+\.)+[a-z]{2,})/gi;
+while((m=reDom.exec(t))){
+const d=m[1].toLowerCase();
+if(!SKIPDOM.test(d))add("domain",d,1);
+}
+const reMail=/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+while((m=reMail.exec(t)))if(!/example\.com/i.test(m[0]))add("email",m[0],1);
+const reWa=/wa\.me\/(\d{6,15})/g;
+while((m=reWa.exec(t)))add("wa",m[1],1);
+const reTg=/t\.me\/([A-Za-z0-9_]{4,32})/g;
+while((m=reTg.exec(t)))add("telegram",m[1],1);
+const reIg=/instagram\.com\/([A-Za-z0-9_.]{2,30})/g;
+while((m=reIg.exec(t)))add("instagram",m[1],1);
+}
+return [...map.values()].sort((a,b)=>b.n-a.n).slice(0,60);
+}
+
+function renderDetected(list){
+const box=$("det");
+box.innerHTML="";
+$("detcard").hidden=false;
+if(!list.length){box.textContent="gak ada kandidat yang kebaca.";return}
+list.forEach((it,i)=>{
+const b=document.createElement("button");
+b.className="chip";
+b.style.animationDelay=Math.min(i*20,400)+"ms";
+b.innerHTML="<i></i><b></b><em></em>";
+b.children[0].textContent=it.kinds[0];
+b.children[1].textContent=it.val;
+b.children[1].title=it.val;
+b.children[2].textContent=it.n+"x";
+b.onclick=()=>{pickPair(it.val);b.classList.add("used")};
+box.appendChild(b);
+});
+}
+
+async function runDetect(){
+if(!inputs.length)return;
+$("detcard").hidden=false;
+$("det").textContent="scanning...";
+try{
+detected=await detect(await loadEntries());
+renderDetected(detected);
+}catch(err){
+$("det").textContent="gagal scan: "+err.message;
+}
+}
+
+$("rescan").onclick=runDetect;
+$("addall").onclick=()=>{
+document.querySelectorAll("#det .chip").forEach((b,i)=>{
+if(detected[i]){pickPair(detected[i].val);b.classList.add("used")}
+});
+};
+
+const isZip=f=>/\.zip$/i.test(f.name);
+const BIN=/^(png|jpe?g|gif|webp|ico|bmp|mp3|mp4|wav|pdf|woff2?|ttf|eot|otf|rar|7z|exe|gz|tar)$/i;
+
+async function loadEntries(){
+const list=[];
+for(const f of inputs){
+if(isZip(f)){
+const z=await JSZip.loadAsync(f);
+Object.keys(z.files).forEach(k=>{
+const e=z.files[k];
+list.push({name:k,dir:e.dir,date:e.date,text:()=>e.async("string"),bytes:()=>e.async("uint8array")});
+});
+}else{
+list.push({name:f.name,dir:false,date:new Date(f.lastModified),text:()=>f.text(),bytes:async()=>new Uint8Array(await f.arrayBuffer())});
+}
+}
+return list;
+}
+
+function setFiles(fl){
+const list=[...(fl||[])];
+if(!list.length)return;
+inputs=list;
+const cur=extList();
+list.forEach(f=>{
+if(isZip(f))return;
+const x=(f.name.split(".").pop()||"").toLowerCase();
+if(x&&!BIN.test(x)&&!cur.includes(x)){cur.push(x);$("ext").value=cur.join(",")}
+});
+const total=list.reduce((a,f)=>a+f.size,0);
+$("fname").textContent=(list.length===1?list[0].name:list.length+" file")+" ("+(total/1024).toFixed(1)+" KB)";
+$("run").disabled=false;
+runDetect();
+}
+$("drop").onclick=()=>$("file").click();
+$("file").onchange=e=>setFiles(e.target.files);
+["dragover","dragenter"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.add("on")}));
+["dragleave","drop"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.remove("on")}));
+$("drop").addEventListener("drop",e=>setFiles(e.dataTransfer.files));
+
+function esc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
+
+function buildRules(){
+const cs=$("cs").checked,rx=$("rx").checked;
+const rules=[];
+document.querySelectorAll("#pairs .row").forEach(r=>{
+const f=r.querySelector(".f").value,t=r.querySelector(".r").value;
+if(!f)return;
+rules.push({re:new RegExp(rx?f:esc(f),cs?"g":"gi"),to:t});
+});
+return rules;
+}
+
+function apply(str,rules){
+let n=0;
+for(const r of rules){
+str=str.replace(r.re,()=>{n++;return r.to});
+}
+return {str,n};
+}
+
+$("credit").onclick=e=>{
+e.preventDefault();
+const i=$("info");
+i.hidden=!i.hidden;
+if(!i.hidden)i.scrollIntoView({behavior:"smooth",block:"center"});
+};
+
+$("run").onclick=async()=>{
+const log=$("log");
+const out=[];
+const run=$("run");
+try{
+const rules=buildRules();
+if(!rules.length){log.textContent="isi minimal 1 pasangan cari/ganti.";return}
+run.disabled=true;
+run.classList.add("load");
+$("bar").classList.add("on");
+$("fill").style.width="0%";
+log.textContent="membaca zip...";
+const exts=extList();
+const entries=await loadEntries();
+const single=inputs.length===1&&!isZip(inputs[0]);
+let singleOut=null;
+const dst=new JSZip();
+const renamePath=$("rp").checked;
+let totalHits=0,changedFiles=0,renamed=0;
+let idx=0;
+for(const e of entries){
+const name=e.name;
+let newName=name;
+if(renamePath){
+const rr=apply(name,rules);
+newName=rr.str;
+if(rr.n){renamed++;out.push("rename: "+name+" -> "+newName)}
+}
+if(e.dir){dst.folder(newName)}
+else{
+const ext=name.split(".").pop().toLowerCase();
+if(exts.includes(ext)){
+const txt=await e.text();
+const rr=apply(txt,rules);
+if(rr.n){totalHits+=rr.n;changedFiles++;out.push(rr.n+"x  "+newName)}
+if(single)singleOut={name:newName,data:rr.str};
+dst.file(newName,rr.str,{date:e.date});
+}else{
+const bin=await e.bytes();
+if(single)singleOut={name:newName,data:bin};
+dst.file(newName,bin,{date:e.date,binary:true});
+}
+}
+idx++;
+$("fill").style.width=(idx/entries.length*85)+"%";
+if(idx%8===0)await new Promise(r=>setTimeout(r,0));
+}
+log.textContent="menyusun zip...";
+let blob,dlName;
+if(single&&singleOut){
+blob=new Blob([singleOut.data]);
+dlName=singleOut.name.split("/").pop();
+}else{
+blob=await dst.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}},m=>{
+$("fill").style.width=(85+m.percent*.15)+"%";
+});
+dlName=inputs.length===1?inputs[0].name.replace(/\.zip$/i,"")+"-renamed.zip":"renamed-files.zip";
+}
+$("fill").style.width="100%";
+const a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download=dlName;
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(a.href),10000);
+log.textContent="selesai\nfile berubah: "+changedFiles+"\ntotal replace: "+totalHits+"\npath direname: "+renamed+"\n\n"+out.join("\n");
+}catch(err){
+log.textContent="error: "+err.message;
+}finally{
+run.disabled=false;
+run.classList.remove("load");
+setTimeout(()=>$("bar").classList.remove("on"),1200);
+}
+};
+</script>
+</body>
+</html>
